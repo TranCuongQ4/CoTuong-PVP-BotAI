@@ -1,0 +1,355 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('../nenweb.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+}
+
+.board-container {
+    position: relative;
+    width: 540px;
+    height: 630px;
+}
+
+#chessBoard {
+    width: 540px;
+    height: 630px;
+}
+
+#pieces {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.piece {
+    position: absolute;
+    width: 54px;
+    height: 54px;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+}
+
+.piece.selected {
+    box-shadow: 0 0 0 3px #ffeb3b, 0 0 10px #ffeb3b;
+}
+
+.valid-move {
+    position: absolute;
+    width: 20px; /* Kích thước chấm tròn */
+    height: 20px; /* Kích thước chấm tròn */
+    background-color: rgba(0, 128, 0, 0.9); /* Nền xanh đậm */
+    border: 2px solid #ffd700; /* Viền vàng */
+    border-radius: 50%; /* Biến thành hình tròn */
+    cursor: pointer;
+    transform: translate(-50%, -50%); /* Căn giữa chấm tròn tại vị trí */
+    top: 50%; /* Đặt giữa ô */
+    left: 50%; /* Đặt giữa ô */
+}
+
+.valid-move:hover {
+    background-color: rgba(0, 255, 0, 0.9); /* Nền xanh sáng hơn khi hover */
+}
+
+.history {
+    width: 200px;
+    height: 630px;
+    overflow-y: auto;
+    border: 4px solid #000;
+    background-color: transparent;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 10px;
+    border: 4px solid #000;
+    box-sizing: border-box;
+}
+
+.history h3 {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#moveHistory {
+    list-style-type: none;
+    padding: 0;
+}
+
+#moveHistory li {
+    padding: 5px 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.clocks-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 630px;
+    margin-left: 30px;
+    border: 4px solid #000;
+    background-color: transparent;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.clock {
+    font-size: 24px;
+    font-family: monospace;
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    width: 100px;
+}
+
+#redClock {
+    margin-top: 10px;
+}
+
+#blackClock {
+    margin-bottom: 10px;
+}
+
+#reloadBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff4444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#reloadBtn:hover {
+    background-color: #cc0000;
+}
+
+#twoPlayerBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff4444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px; /* Khoảng cách với nút trên */
+}
+
+#twoPlayerBtn:hover {
+    background-color: #cc0000;
+}
+
+#rulesBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff4444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px; /* Khoảng cách với nút trên */
+}
+
+#rulesBtn:hover {
+    background-color: #cc0000;
+}
+
+/* Kiểu dáng cho bảng thông báo chung */
+.modal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(128, 128, 128, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
+    max-width: 500px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.modal-content p {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+#startBtn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ff4444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#startBtn:hover {
+    background-color: #cc0000;
+}
+
+/* Kiểu dáng cho bảng thông báo xác nhận */
+#confirmModal .modal-content {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
+    max-width: 400px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+#confirmNoBtn, #confirmYesBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#confirmNoBtn {
+    background-color: #666;
+    color: #fff;
+}
+
+#confirmNoBtn:hover {
+    background-color: #555;
+}
+
+#confirmYesBtn {
+    background-color: #ff4444;
+    color: #fff;
+}
+
+#confirmYesBtn:hover {
+    background-color: #cc0000;
+}
+
+/* Kiểu dáng cho bảng thông báo chế độ 2 người */
+#twoPlayerModal .modal-content {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
+    max-width: 400px;
+}
+
+#twoPlayerNoBtn, #twoPlayerOkBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#twoPlayerNoBtn {
+    background-color: #666;
+    color: #fff;
+}
+
+#twoPlayerNoBtn:hover {
+    background-color: #555;
+}
+
+#twoPlayerOkBtn {
+    background-color: #ff4444;
+    color: #fff;
+}
+
+#twoPlayerOkBtn:hover {
+    background-color: #cc0000;
+}
+
+/* Kiểu dáng cho bảng thông báo luật chơi */
+.rules-content {
+    max-width: 600px;
+    text-align: left;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.rules-content h3 {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.rules-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.rules-table th, .rules-table td {
+    border: 1px solid #fff;
+    padding: 10px;
+    font-size: 16px;
+    text-align: left;
+}
+
+.rules-table th {
+    background-color: #444;
+}
+
+#closeRulesBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff4444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#closeRulesBtn:hover {
+    background-color: #cc0000;
+}
+
+/* Kiểu dáng cho ảnh bên trái */
+#leftImage {
+    width: 55px;
+    height: 540px;
+    margin-left: 10px;
+    margin-top: 80px;
+    object-fit: cover;
+}
