@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cờ Tướng Trần Cường</title>
+    <link rel="stylesheet" href="stylesvs.css">
+</head>
+<body>
+    <div class="container">
+        <img id="leftImage" src="../leftimage.png" alt="Hình ảnh bên trái">
+        <div class="history">
+            <h3>Bảng Ghi Lại Nước Đi:</h3>
+            <ul id="moveHistory"></ul>
+        </div>
+        <div class="board-container">
+            <img src="../board.png" alt="Bàn cờ" id="chessBoard">
+            <div id="pieces"></div>
+        </div>
+        <div class="clocks-container">
+            <div id="redClock" class="clock">01:00</div>
+            <button id="reloadBtn">Chơi Lại</button>
+            <button id="twoPlayerBtn">Vô Hai Người Đấu Nhau</button>
+            <button id="rulesBtn">Luật Cờ Tướng</button>
+            <div id="blackClock" class="clock">01:00</div>
+        </div>
+    </div>
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <p>Chào Mừng Bạn Đến Với Web Cờ Tướng Trần Cường!<br>Luật Chơi Theo Chuẩn Quốc Tế!<br>Mỗi Bên Có 60 Giây Để Chơi Và Bạn Là Bên Đen Sẽ Đi Trước<br>Khi Bạn Nhấn Bắt Đầu Là Chính Thức Vào Trận Đấu Với Bot AI Thời Gian Đếm Ngược Kích Hoạt!<br>Chúc Bạn Giải Trí Vui Vẻ Nha...!</p>
+            <button id="startBtn">Bắt Đầu</button>
+        </div>
+    </div>
+    <div id="confirmModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p>Bạn Đã Sẵn Sàng Đấu Lại Chứ ?...</p>
+            <div class="modal-buttons">
+                <button id="confirmNoBtn">Không</button>
+                <button id="confirmYesBtn">Đồng Ý</button>
+            </div>
+        </div>
+    </div>
+    <div id="twoPlayerModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p>Bạn Muốn Quay Trở Về Chế Độ 2 Người Đấu Với Nhau Chứ?...</p>
+            <div class="modal-buttons">
+                <button id="twoPlayerNoBtn">Không</button>
+                <button id="twoPlayerOkBtn">Ok</button>
+            </div>
+        </div>
+    </div>
+    <div id="rulesModal" class="modal" style="display: none;">
+        <div class="modal-content rules-content">
+            <h3>Luật Chơi Cờ Tướng</h3>
+            <table class="rules-table">
+                <tr>
+                    <th colspan="2">Cách Di Chuyển Các Quân Cờ</th>
+                </tr>
+                <tr>
+                    <td>Tướng</td>
+                    <td>Di chuyển 1 ô ngang hoặc dọc trong cung (3x3 ô ở giữa phía dưới/ trên bàn cờ).</td>
+                </tr>
+                <tr>
+                    <td>Sĩ</td>
+                    <td>Di chuyển 1 ô chéo trong cung (3x3 ô).</td>
+                </tr>
+                <tr>
+                    <td>Tượng</td>
+                    <td>Di chuyển 2 ô chéo, không qua sông, không đi nếu có quân cản ở ô giữa.</td>
+                </tr>
+                <tr>
+                    <td>Mã</td>
+                    <td>Di chuyển hình chữ "L" (2 ô ngang + 1 ô dọc hoặc ngược lại), bị cản nếu có quân ở ô cạnh chân mã.</td>
+                </tr>
+                <tr>
+                    <td>Xe</td>
+                    <td>Di chuyển ngang hoặc dọc bất kỳ số ô, không bị cản trừ khi có quân khác trên đường đi.</td>
+                </tr>
+                <tr>
+                    <td>Pháo</td>
+                    <td>Di chuyển ngang hoặc dọc như Xe. Để ăn quân, cần 1 quân khác làm "ngựa" ở giữa.</td>
+                </tr>
+                <tr>
+                    <td>Tốt</td>
+                    <td>Trước khi qua sông: đi thẳng 1 ô. Sau khi qua sông: đi thẳng hoặc ngang 1 ô.</td>
+                </tr>
+                <tr>
+                    <th colspan="2">Cách Ăn Quân Cờ</th>
+                </tr>
+                <tr>
+                    <td colspan="2">Quân cờ di chuyển đến vị trí của quân đối phương theo luật di chuyển của nó sẽ ăn quân đó (trừ trường hợp đặc biệt của Pháo cần ngựa).</td>
+                </tr>
+                <tr>
+                    <th colspan="2">Luật Tướng Đối Mặt</th>
+                </tr>
+                <tr>
+                    <td colspan="2">Hai Tướng không được nằm trên cùng một cột mà không có quân cờ nào ở giữa. Nước đi khiến hai Tướng đối mặt sẽ không hợp lệ.</td>
+                </tr>
+                <tr>
+                    <th colspan="2">Luật Chiếu 5 Lần</th>
+                </tr>
+                <tr>
+                    <td colspan="2">Nếu một bên chiếu tướng liên tục 5 lần mà không thay đổi nước đi, nước chiếu tiếp theo sẽ bị cấm và phải đi nước khác.</td>
+                </tr>
+            </table>
+            <button id="closeRulesBtn">Đóng</button>
+        </div>
+    </div>
+    <script src="scriptvs.js"></script>
+    <script src="ai.js"></script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9253dd84287abfa9',t:'MTc0Mjc5NTE1Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'92541e57fe6eada0',t:'MTc0Mjc5NzgxMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9265cb52ecaa7b9b',t:'MTc0Mjk4MzE1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
